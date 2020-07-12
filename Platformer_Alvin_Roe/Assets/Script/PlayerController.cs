@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     
     public Rigidbody2D rb;
+    
 
     void Start()
     {
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         
-
+        
         //Moving with A and D in the horizontal area
         if(Input.GetKey(KeyCode.A  )){
             rb.velocity=new Vector2(-5,rb.velocity.y);
