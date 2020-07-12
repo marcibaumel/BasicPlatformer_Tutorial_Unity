@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    //Start() Variables
     private Rigidbody2D rb;
     private Animator anim;
     
+    //FSM
     private enum State {idle, running, jump, falling};
     private State state=State.idle;
     private Collider2D coll;
+
+    //Inspector Variables
     [SerializeField]private LayerMask ground;
+    [SerializeField] private float speed=7f;
+    [SerializeField] private float jumpForce=10f;
 
 
     private void Start()
@@ -24,34 +29,32 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        
-        float hdirection=Input.GetAxis("Horizontal");
-        float vdirection=Input.GetAxis("Vertical");        
-        if(hdirection<0){
-            rb.velocity=new Vector2(-5,rb.velocity.y);
-            transform.localScale= new Vector2(-1, 1);
-            
-        }else if(hdirection>0){
-            rb.velocity=new Vector2(5,rb.velocity.y);
-            transform.localScale= new Vector2(1, 1);
-            
-        }
-       else
-       {
-           
-       }
-        
-        //Jump
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground)){
-             rb.velocity=new Vector2(rb.velocity.x, 18f);
-             state=State.jump;
-        }
 
-        VelocityStateSwitch();
+        Movement();
+        AnimationState();
         anim.SetInteger("state", (int)state);
     }
 
-    private void VelocityStateSwitch()
+    private void Movement(){
+        float hdirection=Input.GetAxis("Horizontal");
+        float vdirection=Input.GetAxis("Vertical");        
+        if(hdirection<0){
+            rb.velocity=new Vector2(-speed,rb.velocity.y);
+            transform.localScale= new Vector2(-1, 1);
+            
+        }else if(hdirection>0){
+            rb.velocity=new Vector2(speed,rb.velocity.y);
+            transform.localScale= new Vector2(1, 1);  
+        }
+       
+        //Jump
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground)){
+             rb.velocity=new Vector2(rb.velocity.x, jumpForce);
+             state=State.jump;
+        }
+    }
+
+    private void AnimationState()
     {
         if(state == State.jump)
         {
@@ -79,6 +82,7 @@ public class PlayerController : MonoBehaviour
         
 
     }
+
 
 
 }
