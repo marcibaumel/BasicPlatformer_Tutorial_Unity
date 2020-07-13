@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     //Start() Variables
     private Rigidbody2D rb;
     private Animator anim;
+    public int cherries=0;
     
     //FSM
     private enum State {idle, running, jump, falling};
@@ -33,6 +34,15 @@ public class PlayerController : MonoBehaviour
         Movement();
         AnimationState();
         anim.SetInteger("state", (int)state);
+    }
+
+     private void OnTriggerEnter2D(Collider2D collision) //Trigger for Collectables
+    {
+        if(collision.tag == "Collectable")
+        {
+            Destroy(collision.gameObject); //Cherry destroy
+            cherries += 1;
+        }
     }
 
     private void Movement(){
