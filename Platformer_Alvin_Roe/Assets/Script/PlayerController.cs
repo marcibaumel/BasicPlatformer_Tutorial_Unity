@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private LayerMask ground;
     [SerializeField] private float speed=7f;
     [SerializeField] private float jumpForce=10f;
+    //[SerializeField] private int cherries=0;
 
 
     private void Start()
