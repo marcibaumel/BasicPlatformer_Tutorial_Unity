@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         anim= GetComponent<Animator>();
+        //ide valami kell
         
     }
 
