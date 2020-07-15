@@ -2,26 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrogEnemy : MonoBehaviour
+public class FrogEnemy : Enemy
 {
     [SerializeField]private float leftCap;
     [SerializeField]private float rightCap;
-
-    [SerializeField] private float jumpLength;
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float jumpLength=5f;
+    [SerializeField] private float jumpHeight=5f;
     [SerializeField] private LayerMask ground;
+    
     private Collider2D coll;
     private Rigidbody2D rb;
     private bool facingLeft=true;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         coll=GetComponent<Collider2D>();
         rb=GetComponent<Rigidbody2D>();
     }
 
     
-    void Update()
+    
+    private void Update()
+    {
+        if(anim.GetBool("Jumping"))
+        {
+            if(rb.velocity.y<0.1f)
+            {
+                anim.SetBool("Falling", true);
+                anim.SetBool("Jumping", false);
+            }
+        }
+        if(coll.IsTouchingLayers(ground)&& anim.GetBool("Falling"))
+        {
+            anim.SetBool("Falling", false);
+            
+        }
+    }
+
+    private void Movement()
     {
         if(facingLeft)
         {
@@ -36,6 +55,7 @@ public class FrogEnemy : MonoBehaviour
                 {
                     //Jump
                     rb.velocity=new Vector2(-jumpLength, jumpHeight);
+                    anim.SetBool("Jumping", true);
                 }
                
             }
@@ -58,6 +78,7 @@ public class FrogEnemy : MonoBehaviour
                 {
                     //Jump
                     rb.velocity=new Vector2(jumpLength, jumpHeight);
+                    anim.SetBool("Jumping", true);
                 }
             }
             else
@@ -67,5 +88,8 @@ public class FrogEnemy : MonoBehaviour
 
         }
     }
+
+   
+
     
 }
