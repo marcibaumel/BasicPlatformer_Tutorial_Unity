@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         {
             Movement();
         }
-        //Movement();
         AnimationState();
         anim.SetInteger("state", (int)state);
 
@@ -79,25 +78,25 @@ public class PlayerController : MonoBehaviour
                     rb.velocity=new Vector2(hurtForce, rb.velocity.y);
                 }
             }
-            
         }
-    
     }
 
-    private void Movement(){
+    private void Movement()
+    {
         float hdirection=Input.GetAxis("Horizontal");
         float vdirection=Input.GetAxis("Vertical");    
 
-        if(hdirection<0){
+        if(hdirection<0)
+        {
             rb.velocity=new Vector2(-speed,rb.velocity.y);
             transform.localScale= new Vector2(-1, 1);
             
-        }else if(hdirection>0){
+        }
+        else if(hdirection>0)
+        {
             rb.velocity=new Vector2(speed,rb.velocity.y);
             transform.localScale= new Vector2(1, 1);  
         }
-       
-        //Jump
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground)){
              Jump();
         }
@@ -110,14 +109,12 @@ public class PlayerController : MonoBehaviour
 
     private void AnimationState()
     {
-
         if(state == State.jump)
         {
             if(rb.velocity.y<0.1f)
             {
                 state=State.falling;
             }
-
         }
         else if(state==State.falling)
         {
@@ -135,16 +132,10 @@ public class PlayerController : MonoBehaviour
         }
         else if(Mathf.Abs(rb.velocity.x)>2f)
         {
-            //Going right
             state =State.running;
         }
         else{
             state=State.idle;
         }
-        
-
     }
-
-
-
 }
