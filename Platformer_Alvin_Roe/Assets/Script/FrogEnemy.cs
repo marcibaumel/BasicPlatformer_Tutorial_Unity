@@ -11,14 +11,14 @@ public class FrogEnemy : Enemy
     [SerializeField] private LayerMask ground;
     
     private Collider2D coll;
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
     private bool facingLeft=true;
 
     protected override void Start()
     {
         base.Start();
         coll=GetComponent<Collider2D>();
-        rb=GetComponent<Rigidbody2D>();
+        //rb=GetComponent<Rigidbody2D>();
     }
 
     
