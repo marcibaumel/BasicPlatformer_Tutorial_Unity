@@ -3011,7 +3011,7 @@ GameObject:
   - component: {fileID: 2003948832}
   - component: {fileID: 2003948833}
   m_Layer: 0
-  m_Name: A*
+  m_Name: Ai
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
