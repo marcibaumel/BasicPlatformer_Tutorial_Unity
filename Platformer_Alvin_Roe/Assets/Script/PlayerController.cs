@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     
     
+    
     //FSM
     private enum State {idle, running, jump, falling, hurt};
     private State state=State.idle;
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int cherries=0;
     [SerializeField] private Text cherryText; 
     [SerializeField] private float hurtForce=10f;
+    [SerializeField] private AudioSource cherry;
+    [SerializeField] private AudioSource footstep;
 
 
     private void Start()
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
         coll=GetComponent<Collider2D>();
+        
     }
 
     
@@ -45,10 +49,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void FootStep()
+    {
+        footstep.Play();
+    }
      private void OnTriggerEnter2D(Collider2D collision) //Trigger for Collectables
     {
         if(collision.tag == "Collectable")
         {
+            cherry.Play();
             Destroy(collision.gameObject); //Cherry destroy
             cherries += 1;
             cherryText.text = cherries.ToString();
